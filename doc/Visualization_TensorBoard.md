@@ -65,8 +65,25 @@ mnist with summaries [本地Code](../code/MINIST_Tensorboard.py) [官方GitHub](
 
 **记录动态变量**
 
-为了验证模型在训练过程中的表现，就需要把，目标函数，预测精度进行输出绘制图标。
+为了验证模型在训练过程中的表现，就需要把，目标函数，预测精度进行输出绘制图标。   
+创建相应的operations来记录这些变量的变化。
+
+	tf.summary.scalar('cost', cross_entropy)
+	tf.summary.scalar('accuracy', accuary)  
+通过将operations 合并成单个(merged summary operation) 。省去多层置信所有operation的过程。  
+
+	summary_op = tf.summary.merge_all()
+
+**记录** 
+
+最后通过在session 执行 train operation 和 summary operation。 在使用Summary Writer 将相应的信息记录在log目录下。
+
+	# perform the operations we defined earlier on batch
+	_, summary = sess.run([train_op, summary_op], feed_dict={x: batch_x, y_: batch_y})
+	            
+	# write log
+	writer.add_summary(summary, epoch * batch_count + i)
 
 
-**代码**
-[GitHub]()
+**代码**  
+[GitHub](https://github.com/Mastype/TensorFlowLearning/blob/master/code/Tensorboard.py)
