@@ -61,7 +61,7 @@ mnist with summaries [本地Code](../code/MINIST_Tensorboard.py) [官方GitHub](
 
 绘制后的图形如下：
 
-![architecture](\pic\Tensorboard.png)
+![architecture](\pic\tensorboard.png)
 
 **记录动态变量**
 

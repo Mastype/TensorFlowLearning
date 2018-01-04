@@ -140,6 +140,7 @@ def train():
   # /tmp/tensorflow/mnist/logs/mnist_with_summaries (by default)
   merged = tf.summary.merge_all()
   train_writer = tf.summary.FileWriter(FLAGS.log_dir + '/train', sess.graph)
+  print(FLAGS.log_dir + '/train', sess.graph)
   test_writer = tf.summary.FileWriter(FLAGS.log_dir + '/test')
   tf.global_variables_initializer().run()
 
@@ -174,17 +175,17 @@ def train():
         train_writer.add_summary(summary, i)
         print('Adding run metadata for', i)
       else:  # Record a summary
-        summary, _ = sess.run([merged, train_step], feed_dict=feed_dict(True))
+        summary, _ = sess.run([merged, train_step], feed_dict =feed_dict(True))
         train_writer.add_summary(summary, i)
   train_writer.close()
   test_writer.close()
 
 
-def main(_):
-  if tf.gfile.Exists(FLAGS.log_dir):
-    tf.gfile.DeleteRecursively(FLAGS.log_dir)
-  tf.gfile.MakeDirs(FLAGS.log_dir)
-  train()
+def main():
+    if tf.gfile.Exists(FLAGS.log_dir):
+        tf.gfile.DeleteRecursively(FLAGS.log_dir)
+    tf.gfile.MakeDirs(str(FLAGS.log_dir))
+    train()
 
 
 if __name__ == '__main__':
@@ -210,5 +211,7 @@ if __name__ == '__main__':
       default=os.path.join(os.getenv('TEST_TMPDIR', 'tmp'),
                            'tensorflow/mnist/logs/mnist_with_summaries'),
       help='Summaries log directory')
+      
   FLAGS, unparsed = parser.parse_known_args()
-  tf.app.run(main=main, argv=[sys.argv[0]] + unparsed)
+#  tf.app.run(main=main, argv=[sys.argv[0]] + unparsed)
+  main()
